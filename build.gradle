@@ -37,10 +37,9 @@ dependencies {
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
-    implementation 'javax.json:javax.json-api:1.1.4'
     implementation 'com.jfoenix:jfoenix:9.0.10'
     implementation 'org.json:json:20210307'
-    implementation 'org.glassfish:glassfish-parent:3.1.1'
+    implementation "org.glassfish:javax.json:1.1.4"
 }
 
 test {

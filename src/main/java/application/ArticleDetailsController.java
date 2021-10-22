@@ -5,13 +5,14 @@ package application;
 
 
 import application.news.Article;
+import application.news.Controller;
 import application.news.User;
 
 /**
  * @author ÁngelLucas
  *
  */
-public class ArticleDetailsController {
+public class ArticleDetailsController implements Controller {
 	//TODO add attributes and methods as needed
 	    private User usr;
 	    private Article article;
@@ -36,4 +37,9 @@ public class ArticleDetailsController {
 			this.article = article;
 			//TODO complete this method
 		}
+
+	@Override
+	public void receiveArticle(Article article) {
+
+	}
 }

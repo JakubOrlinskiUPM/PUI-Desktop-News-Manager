@@ -11,6 +11,7 @@ import javax.json.JsonObject;
 
 import application.news.Article;
 import application.news.Categories;
+import application.news.Controller;
 import application.news.User;
 import application.utils.JsonArticle;
 import javafx.fxml.FXML;
@@ -33,7 +34,7 @@ import serverConection.ConnectionManager;
  * @author ÁngelLucas
  *
  */
-public class ArticleEditController {
+public class ArticleEditController implements Controller {
     private ConnectionManager connection;
 	private ArticleEditModel editingArticle;
 	private User usr;
@@ -147,5 +148,10 @@ public class ArticleEditController {
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
+	}
+
+	@Override
+	public void receiveArticle(Article article) {
+
 	}
 }

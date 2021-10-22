@@ -6,6 +6,7 @@ package application;
 
 import application.news.Article;
 import application.news.Categories;
+import application.news.Controller;
 import application.news.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,7 +23,7 @@ import serverConection.ConnectionManager;
  * @author ÁngelLucas
  *
  */
-public class NewsReaderController {
+public class NewsReaderController implements Controller {
 
     private NewsReaderModel newsReaderModel = new NewsReaderModel();
     private User usr;
@@ -75,6 +76,11 @@ public class NewsReaderController {
                 articleSelected(oldValue, newValue);
             }
         });
+    }
+
+    @Override
+    public void receiveArticle(Article article) {
+
     }
 
     private void articleSelected(Article oldValue, Article newValue) {

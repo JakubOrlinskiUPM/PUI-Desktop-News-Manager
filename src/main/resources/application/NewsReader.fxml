@@ -14,16 +14,29 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="399.0" prefWidth="613.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.NewsReaderController">
     <left>
         <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <children>
-                <Label text="Headlines" />
-                <ListView fx:id="articleListView" prefHeight="200.0" prefWidth="200.0" />
-                <Label text="Categories" />
-                <ChoiceBox fx:id="categoriesChoiceBox" prefWidth="150.0" />
+                <Label text="Headlines">
+               <VBox.margin>
+                  <Insets left="5.0" />
+               </VBox.margin></Label>
+                <ListView fx:id="articleListView" prefHeight="200.0" prefWidth="200.0">
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </VBox.margin></ListView>
+                <Label text="Categories">
+               <VBox.margin>
+                  <Insets left="5.0" top="5.0" />
+               </VBox.margin></Label>
+                <ChoiceBox fx:id="categoriesChoiceBox" prefWidth="150.0">
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </VBox.margin></ChoiceBox>
             </children>
         </VBox>
     </left>
@@ -36,18 +49,21 @@
                             <image>
                                 <Image url="https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dmlld3xlbnwwfHwwfHw%3D&amp;ixlib=rb-1.2.1&amp;w=1000&amp;q=80https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dmlld3xlbnwwfHwwfHw%3D&amp;ixlib=rb-1.2.1&amp;w=1000&amp;q=80" />
                             </image>
+                     <HBox.margin>
+                        <Insets left="5.0" top="5.0" />
+                     </HBox.margin>
                         </ImageView>
                         <MenuButton mnemonicParsing="false" text="Menu">
                             <items>
-                                <MenuItem onAction="#onMenuLoad" mnemonicParsing="false" text="Load article from file" />
-                                <MenuItem onAction="#onMenuLogin" mnemonicParsing="false" text="Login" />
-                                <MenuItem onAction="#onMenuNew" mnemonicParsing="false" text="New" />
-                                <MenuItem onAction="#onMenuEdit" mnemonicParsing="false" text="Edit" />
-                                <MenuItem onAction="#onMenuDelete" mnemonicParsing="false" text="Delete" />
-                                <MenuItem onAction="#onMenuExit"  mnemonicParsing="false" text="Exit" />
+                                <MenuItem mnemonicParsing="false" onAction="#onMenuLoad" text="Load article from file" />
+                                <MenuItem mnemonicParsing="false" onAction="#onMenuLogin" text="Login" />
+                                <MenuItem mnemonicParsing="false" onAction="#onMenuNew" text="New" />
+                                <MenuItem mnemonicParsing="false" onAction="#onMenuEdit" text="Edit" />
+                                <MenuItem mnemonicParsing="false" onAction="#onMenuDelete" text="Delete" />
+                                <MenuItem mnemonicParsing="false" onAction="#onMenuExit" text="Exit" />
                             </items>
                             <HBox.margin>
-                                <Insets left="200.0" />
+                                <Insets left="200.0" top="5.0" />
                             </HBox.margin>
                         </MenuButton>
                     </children>
@@ -57,15 +73,21 @@
                         <Insets top="30.0" />
                     </VBox.margin>
                <children>
-                        <WebView fx:id="articleContent" prefHeight="161.0" prefWidth="511.0" />
+                        <WebView fx:id="articleContent" layoutX="5.0" prefHeight="160.0" prefWidth="500.0" />
 <!--                        <HTMLEditor fx:id="articleContent" prefHeight="400.0" prefWidth="896.0" />-->
-                   <Button fx:id="readMore" layoutX="419.0" layoutY="171.0" text="Read more" />
+                   <Button fx:id="readMore" layoutX="420.0" layoutY="167.0" text="Read more" />
                </children>
                 </AnchorPane>
             </children>
         </VBox>
     </center>
     <top>
-        <Label text="News online for user ID" BorderPane.alignment="CENTER" />
+        <Label fx:id="newsHeader" text="News Online for User" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets top="5.0" />
+         </BorderPane.margin>
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
     </top>
 </BorderPane>

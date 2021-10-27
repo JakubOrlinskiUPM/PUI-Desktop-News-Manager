@@ -39,6 +39,8 @@ public class NewsReaderController implements Controller {
     private User usr;
 
     @FXML
+    private Label newsHeader;
+    @FXML
     private ListView<Article> articleListView;
     private FilteredList<Article> filteredData;
 
@@ -133,12 +135,13 @@ public class NewsReaderController implements Controller {
     /**
      * @param usr the usr to set
      */
-    void setUsr(User usr) {
+    @Override
+	public void setUsr(User usr) {
 
         this.usr = usr;
         //Reload articles
         this.getData();
-        //TODO Update UI
+        this.newsHeader.setText("News Online for User: " + usr.getIdUser());
     }
 
     public void onMenuLoad() {
@@ -194,12 +197,23 @@ public class NewsReaderController implements Controller {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.setTitle(scene.toString());
             stage.setScene(new Scene(root));
-            stage.show();
+            
 
             if (article != null) {
+            	stage.show();
                 Controller controller = loader.<NewsReaderController>getController();
-
+                if (this.usr != null) {
+                	controller.setUsr(usr);
+                }
                 controller.receiveArticle(article);
+            } else {
+            	stage.showAndWait();
+            	LoginController controller = loader.<LoginController>getController();
+            	User newUsr = controller.getLoggedUsr();
+            	if (newUsr != null) {
+            		setUsr(newUsr);
+                    System.out.println("User Id in main screen: " + this.usr.getIdUser());
+            	}
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -106,7 +106,7 @@ public class ArticleEditController implements Controller {
 	 * 
 	 * @param usr the usr to set
 	 */
-	void setUsr(User usr) {
+	public void setUsr(User usr) {
 		this.usr = usr;
 		//TODO Update UI and controls 
 		

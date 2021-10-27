@@ -9,39 +9,60 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="loginWindow" prefHeight="294.0" prefWidth="404.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LoginController">
    <top>
-      <ImageView fx:id="loginLogo" fitHeight="70.0" fitWidth="143.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
-   </top>
-   <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="alertLabel" visible="false" prefHeight="17.0" text="The username or passwrod are wrong!" />
-
-            <HBox alignment="CENTER" prefHeight="36.0" prefWidth="404.0">
+            <Label text="Login">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
                <children>
-                  <Label prefHeight="17.0" prefWidth="90.0" text="Login:" />
-                  <TextField fx:id="userIdField" promptText="User IDUser ID" text="Admin1" />
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fx:id="loginLogo" fitHeight="70.0" fitWidth="143.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin></ImageView>
+                        <Label fx:id="alertLabel" prefHeight="25.0" text="The username or passwrod are wrong!" visible="false">
+                           <HBox.margin>
+                              <Insets left="10.0" top="20.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+      
+                  <HBox alignment="CENTER" prefHeight="36.0" prefWidth="404.0">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="90.0" text="Login:" />
+                        <TextField fx:id="userIdField" promptText="User ID" text="Admin1" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="404.0">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="90.0" text="Password:" />
+                        <PasswordField fx:id="passwordField" promptText="Password" text="admin1" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="10.0" layoutY="110.0" prefHeight="39.0" prefWidth="404.0" spacing="100.0">
+                     <children>
+                        <Button fx:id="backButton" mnemonicParsing="false" text="Back" />
+                        <Button fx:id="loginButton" mnemonicParsing="false" text="Login" />
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
-            <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="404.0">
-               <children>
-                  <Label prefHeight="17.0" prefWidth="90.0" text="Password:" />
-                  <PasswordField  fx:id="passwordField" promptText="Password" text="admin1" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" layoutX="10.0" layoutY="110.0" prefHeight="39.0" prefWidth="404.0" spacing="100.0">
-               <children>
-                  <Button fx:id="backButton" mnemonicParsing="false" text="Back" />
-                  <Button fx:id="loginButton" mnemonicParsing="false" text="Login" />
-               </children>
-            </HBox>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
+            </VBox>
          </children>
-         <padding>
-            <Insets top="20.0" />
-         </padding>
       </VBox>
-   </center>
+   </top>
 </BorderPane>

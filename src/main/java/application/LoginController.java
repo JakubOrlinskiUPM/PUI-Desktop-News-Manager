@@ -59,7 +59,9 @@ public class LoginController implements Controller {
 		User user = loginModel.validateUser(userIdField.getText(), passwordField.getText());
 
 		if (user != null) {
-			System.out.println("authorized");
+			System.out.println("authorized. User ID: " + user.getIdUser());
+			this.loggedUsr = user;
+			goBack();
 		} else {
 			alertLabel.setVisible(true);
 		}
@@ -76,5 +78,11 @@ public class LoginController implements Controller {
 	@Override
 	public void receiveArticle(Article article) {
 
+	}
+
+	@Override
+	public void setUsr(User usr) {
+		// doesn't do anything here
+		
 	}
 }

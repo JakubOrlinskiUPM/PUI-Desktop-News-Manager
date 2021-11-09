@@ -9,6 +9,7 @@ import application.news.Categories;
 import application.news.Controller;
 import application.news.User;
 import application.utils.JsonArticle;
+import application.utils.exceptions.ErrorMalFormedArticle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.transformation.FilteredList;
@@ -23,11 +24,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.HTMLEditor;
 import javafx.scene.web.WebView;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import serverConection.ConnectionManager;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+
+import javax.json.JsonObject;
 
 /**
  * @author ÁngelLucas
@@ -145,7 +151,7 @@ public class NewsReaderController implements Controller {
     }
 
     public void onMenuLoad() {
-
+    	routeToFile();
     }
 
     public void onMenuLogin() {
@@ -184,6 +190,48 @@ public class NewsReaderController implements Controller {
 
     private void routeToLogin() {
         this.routeToPage(AppScenes.LOGIN, null);
+    }
+    
+    private void routeToFile() {
+//    	For testing purposes: Writing an article
+//    	Article testArticle = new Article();
+//    	testArticle.setTitle("ArticleTitle");
+//    	testArticle.setCategory("News");
+//    	testArticle.setAbstractText("Some random abstract.");
+//    	testArticle.setBodyText("This is some random body text.");
+//    	
+//    	JsonObject jsonArticle = JsonArticle.articleToJson(testArticle);
+//    	String name = testArticle.getTitle().replaceAll("\\||/|\\\\|:|\\?","");
+//		String fileName = name+".news";
+//		//JsonObject data = JsonArticle.articleToJson(this.getArticle());
+//		  try (FileWriter file = new FileWriter(fileName)) {
+//	            file.write(jsonArticle.toString());
+//	            file.flush();
+//	        } catch (IOException e) {
+//	            e.printStackTrace();
+//	        }
+    	// Read a file:
+    	FileChooser fileChooser = new FileChooser();
+    	//Set extension filter
+    	FileChooser.ExtensionFilter extFilterJson = new FileChooser.ExtensionFilter("Json files (*.json)", "*.JSON");
+    	FileChooser.ExtensionFilter extFilterNews = new FileChooser.ExtensionFilter("News files (*.news)", "*.NEWS");
+        fileChooser.getExtensionFilters().addAll(extFilterJson, extFilterNews);
+        
+        //Show open file dialog
+        File file = fileChooser.showOpenDialog(null);
+        
+        JsonObject jsonArticle = JsonArticle.readFile(file.getAbsolutePath());
+        try {
+			Article loadedArticle = JsonArticle.jsonToArticle(jsonArticle);
+			System.out.println("Successfully loaded Article: " + loadedArticle.getTitle());
+			
+			routeToPage(AppScenes.EDITOR, loadedArticle);
+		} catch (ErrorMalFormedArticle e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//        
+            
     }
 
     private void routeToPage(AppScenes scene, Article article) {

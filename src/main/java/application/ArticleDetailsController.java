@@ -17,7 +17,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 /**
- * @author ÁngelLucas
+ * @author Ã�ngelLucas
  *
  */
 public class ArticleDetailsController implements Controller {
@@ -70,6 +70,8 @@ public class ArticleDetailsController implements Controller {
 	public void receiveArticle(Article article) {
 		if (this.usr != null) {
 			this.articleHeader.setText("News Online for User: " + usr.getIdUser());
+		} else {
+			this.articleHeader.setText("News Online");
 		}
 		this.article = article;
 		this.articleImage.setImage(article.getImageData());
@@ -83,6 +85,8 @@ public class ArticleDetailsController implements Controller {
 	public void receiveArticle(User usr, Article article) {
 		if (this.usr != null) {
 			this.articleHeader.setText("News Online for " + usr.getIdUser());
+		} else {
+			this.articleHeader.setText("News Online");
 		}
 		this.article = article;
 		this.articleImage.setImage(article.getImageData());

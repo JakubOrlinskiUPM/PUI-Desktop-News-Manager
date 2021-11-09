@@ -12,7 +12,7 @@
 
 <AnchorPane prefHeight="420.0" prefWidth="570.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ArticleEditController">
    <children>
-      <Label layoutX="19.0" layoutY="14.0" text="Article Edit">
+      <Label layoutX="19.0" layoutY="14.0" text="Article Edit" AnchorPane.bottomAnchor="378.6666666666667" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="457.6666666666667" AnchorPane.topAnchor="14.0">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -37,16 +37,17 @@
       <ChoiceBox id="categoryChoice" fx:id="articleCategory" layoutX="285.0" layoutY="124.0" prefWidth="150.0" AnchorPane.rightAnchor="138.0" />
       <HTMLEditor fx:id="articleEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutY="171.0" prefHeight="200.0" prefWidth="570.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
       <Button id="backButton" fx:id="backButton" layoutX="15.0" layoutY="381.0" mnemonicParsing="false" onAction="#goBackToMain" text="Back" />
-      <Button id="send_backButton" fx:id="sendBackButton" layoutX="66.0" layoutY="381.0" mnemonicParsing="false" onAction="#send" text="Send &amp; Back" />
+      <Button id="send_backButton" layoutX="66.0" layoutY="381.0" mnemonicParsing="false" onAction="#send" text="Send &amp; Back" />
       <Button id="saveFileButton" fx:id="saveFileButton" layoutX="160.0" layoutY="381.0" mnemonicParsing="false" onAction="#write" text="Save to File" />
-      <Button id="textHtmlButton" fx:id="toggleHtmlButton" layoutX="383.0" layoutY="381.0" mnemonicParsing="false" onAction="#commuteTextHtml" prefHeight="25.0" prefWidth="69.0" text="Html" AnchorPane.rightAnchor="117.66666666666667" />
-     <ImageView id="editImage" fx:id="articleImage" fitHeight="111.0" fitWidth="157.0" layoutX="34.0" layoutY="48.0" onMouseClicked="#onImageClicked" pickOnBounds="true" preserveRatio="true" />
-      <Button id="toggleTextArea" fx:id="toggleTextButton" layoutX="463.0" layoutY="381.0" mnemonicParsing="false" onAction="#changeTextfield" prefHeight="25.0" prefWidth="91.0" text="Body" textAlignment="CENTER" AnchorPane.rightAnchor="15.666666666666671" />
+      <Button id="textHtmlButton" fx:id="toggleHtmlButton" layoutX="383.0" layoutY="381.0" mnemonicParsing="false" onAction="#commuteTextHtml" prefHeight="25.0" prefWidth="83.0" text="Show HTML" AnchorPane.rightAnchor="118.0" />
+     <ImageView id="editImage" fx:id="articleImage" fitHeight="111.0" fitWidth="157.0" layoutX="19.0" layoutY="46.0" onMouseClicked="#onImageClicked" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="394.0" AnchorPane.topAnchor="46.0" />
+      <Button id="toggleTextArea" fx:id="toggleTextButton" layoutX="463.0" layoutY="381.0" mnemonicParsing="false" onAction="#changeTextfield" prefHeight="25.0" prefWidth="93.0" text="Show Body" textAlignment="CENTER" AnchorPane.rightAnchor="16.0" />
       <Label fx:id="userId" layoutX="489.0" layoutY="14.0" text="User: X" AnchorPane.rightAnchor="21.0">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Label>
       <TextArea fx:id="textArea" layoutY="171.0" prefHeight="200.0" prefWidth="570.0" visible="false" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+      <Label fx:id="abstractLabel" layoutX="508.0" layoutY="150.0" text="Abstract" visible="false" AnchorPane.rightAnchor="18.0" />
    </children>
 </AnchorPane>

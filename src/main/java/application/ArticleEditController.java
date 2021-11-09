@@ -58,6 +58,8 @@ public class ArticleEditController implements Controller {
 	@FXML
 	private Label userId;
 	@FXML
+	private Label abstractLabel;
+	@FXML
 	private TextField articleTitle;
 	@FXML
 	private TextField articleSubtitle;
@@ -116,21 +118,29 @@ public class ArticleEditController implements Controller {
 	 */
 	@FXML
 	private boolean send() {
-		String titleText = this.editingArticle.getTitle(); // TODO Get article title
-		Categories category = this.editingArticle.getCategory(); //TODO Get article cateory
+		String titleText = this.editingArticle.getTitle(); 
+		Categories category = this.editingArticle.getCategory(); 
 		if (titleText == null || category == null || 
 				titleText.equals("") || category == Categories.ALL) {
 			Alert alert = new Alert(AlertType.ERROR, "Imposible send the article!! Title and categoy are mandatory", ButtonType.OK);
 			alert.showAndWait();
 			return false;
 		}
-		//TODO prepare and send using connection.saveArticle( ...)
 		try {
-			connection.saveArticle(this.editingArticle.getArticleOriginal());
+			Article articleToSend = new Article();
+			articleToSend.setTitle(editingArticle.getTitle());
+			articleToSend.setSubtitle(editingArticle.getSubtitle());
+			articleToSend.setCategory(editingArticle.getCategory().name());
+			articleToSend.setAbstractText(editingArticle.getAbstractText());
+			articleToSend.setBodyText(editingArticle.getBodyText());
+			articleToSend.setImageData(editingArticle.getImage());
+			ArticleEditModel art = new ArticleEditModel(articleToSend);
+			art.commit();
+			connection.saveArticle(art.getArticleOriginal());
+			goBackToMain(null);
 		} catch (ServerCommunicationError e) {
 			e.printStackTrace();
 		}
-
 		return true;
 	}
 
@@ -141,7 +151,6 @@ public class ArticleEditController implements Controller {
 	 */
 	void setConnectionMannager(ConnectionManager connection) {
 		this.connection = connection;
-		//TODO enable send and back button
 	}
 
 	/**
@@ -182,6 +191,7 @@ public class ArticleEditController implements Controller {
 			this.editingArticle = new ArticleEditModel(usr);
 		}
 		this.articleTitle.setText(this.editingArticle.getTitle());
+		this.articleTitle.setDisable(true);
 		this.articleSubtitle.setText(this.editingArticle.getSubtitle());
 		this.articleCategory.setValue(this.editingArticle.getCategory());
 		this.articleEditor.setHtmlText(this.editingArticle.getAbstractText());
@@ -220,18 +230,22 @@ public class ArticleEditController implements Controller {
 			this.abstractSet = false;
 			if(!this.commuter) {
 				this.textArea.setText(this.editingArticle.getBodyText());
+				this.abstractLabel.setVisible(true);
+				this.abstractLabel.setText("Body");
 			} else {
 				this.articleEditor.setHtmlText(this.editingArticle.getBodyText());
 			}
-			this.toggleTextButton.setText("Abstract");
+			this.toggleTextButton.setText("Show Abstract");
 		} else {
 			this.abstractSet = true;
 			if(!this.commuter) {
 				this.textArea.setText(this.editingArticle.getAbstractText());
+				this.abstractLabel.setVisible(true);
+				this.abstractLabel.setText("Abstract");
 			} else {
 				this.articleEditor.setHtmlText(this.editingArticle.getAbstractText());
 			}
-			this.toggleTextButton.setText("Body");
+			this.toggleTextButton.setText("Show Body");
 		}
 	}
 	
@@ -243,22 +257,30 @@ public class ArticleEditController implements Controller {
 			this.textArea.setVisible(true);
 			this.textArea.setWrapText(true);
 			this.textArea.setText(this.articleEditor.getHtmlText());
-			this.toggleHtmlButton.setText("Text");
+			this.abstractLabel.setVisible(true);
+			if(abstractSet) {
+				this.abstractLabel.setText("Abstract");
+			} else {
+				this.abstractLabel.setText("Body");
+			}
+			this.toggleHtmlButton.setText("Show Text");
 		} else {
 			this.textArea.setVisible(false);
 			this.articleEditor.setVisible(true);
+			this.abstractLabel.setVisible(false);
 			if(abstractSet) {
 				this.articleEditor.setHtmlText(this.editingArticle.getAbstractText());	
 			} else {
 				this.articleEditor.setHtmlText(this.editingArticle.getBodyText());
 			}
 			this.commuter = true;
-			this.toggleHtmlButton.setText("Html");
+			this.toggleHtmlButton.setText("Show Html");
 		}
 	}
 
 	@FXML
 	public void goBackToMain(ActionEvent event) {
+		editingArticle.discardChanges();
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		stage.close();
 	}

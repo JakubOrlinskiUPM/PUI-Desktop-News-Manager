@@ -17,6 +17,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -27,6 +28,8 @@ import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import serverConection.ConnectionManager;
 
 import java.io.File;
@@ -36,13 +39,14 @@ import java.io.IOException;
 import javax.json.JsonObject;
 
 /**
- * @author ÁngelLucas
+ * @author Ã�ngelLucas
  *
  */
 public class NewsReaderController implements Controller {
 
     private NewsReaderModel newsReaderModel = new NewsReaderModel();
     private User usr;
+    private ConnectionManager connectionManager;
 
     @FXML
     private Label newsHeader;
@@ -61,6 +65,13 @@ public class NewsReaderController implements Controller {
 
     @FXML
     private Button readMore;
+    
+    @FXML
+    private MenuItem menuEdit;
+    
+    @FXML
+    private MenuItem menuDelete;
+    
 
 
     public NewsReaderController() {
@@ -91,6 +102,8 @@ public class NewsReaderController implements Controller {
                 articleSelected(oldValue, newValue);
             }
         });
+        this.menuEdit.setDisable(true);
+        this.menuDelete.setDisable(true);
     }
 
     @Override
@@ -102,7 +115,7 @@ public class NewsReaderController implements Controller {
         if (newValue != null) {
             articleImageView.setImage(newValue.getImageData());
             articleContent.getEngine().loadContent(newValue.getAbstractText());
-
+            
             readMore.setOnAction(ev -> {
                 this.routeToArticleDetails(newValue);
             });
@@ -156,6 +169,8 @@ public class NewsReaderController implements Controller {
 
     public void onMenuLogin() {
         routeToLogin();
+        this.menuEdit.setDisable(false);
+        this.menuDelete.setDisable(false);
     }
 
     public void onMenuExit() {
@@ -164,7 +179,7 @@ public class NewsReaderController implements Controller {
     }
 
     public void onMenuEdit() {
-        this.routeToForm(this.articleListView.getSelectionModel().getSelectedItem());
+    	this.routeToForm(this.articleListView.getSelectionModel().getSelectedItem());
     }
 
     public void onMenuNew() {
@@ -177,10 +192,9 @@ public class NewsReaderController implements Controller {
 
     private void routeToForm(Article article) {
         if (article != null) {
-            System.out.println(article.getTitle());
-            this.routeToPage(AppScenes.EDITOR, article);
+            this.routeToEditPage(AppScenes.EDITOR, article);
         } else {
-            this.routeToPage(AppScenes.EDITOR, null);
+            this.routeToEditPage(AppScenes.EDITOR, null);
         }
     }
 
@@ -261,6 +275,44 @@ public class NewsReaderController implements Controller {
             	if (newUsr != null) {
             		setUsr(newUsr);
                     System.out.println("User Id in main screen: " + this.usr.getIdUser());
+            	}
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void routeToEditPage (AppScenes scene, Article article) {
+        try {
+        	FXMLLoader loader = new FXMLLoader(getClass().getResource(scene.getFxmlFile()));
+            Pane root = loader.load();
+            
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.setTitle(scene.toString());
+            stage.setScene(new Scene(root));
+            
+            if(scene == AppScenes.EDITOR) {
+            	ArticleEditController controller = loader.<ArticleEditController>getController();
+            	if(article != null && usr != null) {
+            		controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
+            		controller.setUsr(this.usr);
+            		controller.setArticle(article);
+            		stage.show();
+            		return;
+            	} else if (article == null && usr != null) {
+            		controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
+            		controller.setUsr(this.usr);
+            		controller.setArticle(article);
+            		stage.show();
+            		return;
+            	} else {
+            		controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
+            		controller.setUsr(null);
+            		controller.setArticle(null);
+            		stage.show();
+            		return;
             	}
             }
         } catch (IOException e) {

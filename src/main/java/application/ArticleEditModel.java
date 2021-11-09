@@ -14,7 +14,7 @@ import javafx.scene.image.Image;
 /**
  *This class is used to represent an article when it is editing
  * This class is needed to develop NewsEditController
- * @author ÁngelLucas
+ * @author Ã�ngelLucas
  *
  */
 class ArticleEditModel {
@@ -232,6 +232,10 @@ class ArticleEditModel {
 	void setImage(Image image) {
 		edited.setImageData(image);
 		this.bModified = true;
+	}
+	
+	Image getImage() {
+		return edited.getImageData();
 	}
 	
 	/**

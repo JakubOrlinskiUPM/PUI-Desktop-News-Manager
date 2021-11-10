@@ -102,9 +102,11 @@ public class NewsReaderController implements Controller {
                 articleSelected(oldValue, newValue);
             }
         });
-        this.newsHeader.setText("News Online");
-        this.menuEdit.setDisable(true);
-        this.menuDelete.setDisable(true);
+        if(usr == null ) {
+            this.newsHeader.setText("News Online");
+            this.menuEdit.setDisable(true);
+            this.menuDelete.setDisable(true);
+        }
     }
 
     @Override
@@ -301,21 +303,19 @@ public class NewsReaderController implements Controller {
             		controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
             		controller.setUsr(this.usr);
             		controller.setArticle(article);
-            		stage.showAndWait();
-            		return;
             	} else if (article == null && usr != null) {
             		controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
             		controller.setUsr(this.usr);
             		controller.setArticle(article);
-            		stage.showAndWait();
-            		return;
             	} else {
             		controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
             		controller.setUsr(null);
             		controller.setArticle(article); //Load a file
-            		stage.showAndWait();
-            		return;
             	}
+            	stage.showAndWait();
+            	articleImageView.setImage(controller.getArticle().getImageData());
+                articleContent.getEngine().loadContent(controller.getArticle().getAbstractText());
+            	initialize();
             }
         } catch (IOException e) {
             e.printStackTrace();

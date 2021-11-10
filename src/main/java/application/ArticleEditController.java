@@ -125,6 +125,7 @@ public class ArticleEditController implements Controller {
 			return false;
 		}
 		try {
+			editingArticle.abstractTextProperty().set(this.articleEditor.getHtmlText());
 			editingArticle.setCategory(articleCategory.getValue());
 			editingArticle.commit();
 			connection.saveArticle(editingArticle.getArticleOriginal());

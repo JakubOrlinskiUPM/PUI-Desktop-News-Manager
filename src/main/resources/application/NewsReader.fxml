@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="399.0" prefWidth="613.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.NewsReaderController">
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.NewsReaderController">
     <left>
         <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
             <children>
@@ -62,9 +62,9 @@
                                 <MenuItem fx:id="menuDelete" mnemonicParsing="false" onAction="#onMenuDelete" text="Delete article" />
                                 <MenuItem mnemonicParsing="false" onAction="#onMenuExit" text="Exit" />
                             </items>
-                            <HBox.margin>
-                                <Insets left="230.0" right="12.0" top="5.0" />
-                            </HBox.margin>
+                     <HBox.margin>
+                        <Insets left="230.0" />
+                     </HBox.margin>
                         </MenuButton>
                     </children>
                <VBox.margin>
@@ -78,7 +78,7 @@
                <children>
                         <WebView fx:id="articleContent" layoutX="5.0" prefHeight="151.0" prefWidth="500.0" AnchorPane.bottomAnchor="50.0" />
 <!--                        <HTMLEditor fx:id="articleContent" prefHeight="400.0" prefWidth="896.0" />-->
-                   <Button fx:id="readMore" layoutX="425.0" layoutY="159.0" text="Read more" />
+                   <Button fx:id="readMore" layoutX="425.0" layoutY="159.0" text="Read more" AnchorPane.bottomAnchor="8.333333333333325" AnchorPane.rightAnchor="14.333333333333371" />
                </children>
                 </AnchorPane>
             </children>

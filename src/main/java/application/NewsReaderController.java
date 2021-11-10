@@ -241,7 +241,7 @@ public class NewsReaderController implements Controller {
 			Article loadedArticle = JsonArticle.jsonToArticle(jsonArticle);
 			System.out.println("Successfully loaded Article: " + loadedArticle.getTitle());
 			
-			routeToPage(AppScenes.EDITOR, loadedArticle);
+			routeToEditPage(AppScenes.EDITOR, loadedArticle);
 		} catch (ErrorMalFormedArticle e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -301,19 +301,19 @@ public class NewsReaderController implements Controller {
             		controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
             		controller.setUsr(this.usr);
             		controller.setArticle(article);
-            		stage.show();
+            		stage.showAndWait();
             		return;
             	} else if (article == null && usr != null) {
             		controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
             		controller.setUsr(this.usr);
             		controller.setArticle(article);
-            		stage.show();
+            		stage.showAndWait();
             		return;
             	} else {
             		controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
             		controller.setUsr(null);
             		controller.setArticle(null);
-            		stage.show();
+            		stage.showAndWait();
             		return;
             	}
             }

@@ -312,7 +312,7 @@ public class NewsReaderController implements Controller {
             	} else {
             		controller.setConnectionMannager(this.newsReaderModel.getConnectionManager());
             		controller.setUsr(null);
-            		controller.setArticle(null);
+            		controller.setArticle(article); //Load a file
             		stage.showAndWait();
             		return;
             	}

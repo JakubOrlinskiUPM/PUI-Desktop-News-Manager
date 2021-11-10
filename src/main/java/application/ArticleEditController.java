@@ -5,7 +5,6 @@ package application;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.json.JsonObject;
 
@@ -37,7 +36,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.HTMLEditor;
-import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -127,18 +125,14 @@ public class ArticleEditController implements Controller {
 			return false;
 		}
 		try {
-			Article articleToSend = new Article();
-			articleToSend.setTitle(editingArticle.getTitle());
-			articleToSend.setSubtitle(editingArticle.getSubtitle());
-			articleToSend.setCategory(editingArticle.getCategory().name());
-			articleToSend.setAbstractText(editingArticle.getAbstractText());
-			articleToSend.setBodyText(editingArticle.getBodyText());
-			articleToSend.setImageData(editingArticle.getImage());
-			ArticleEditModel art = new ArticleEditModel(articleToSend);
-			art.commit();
-			connection.saveArticle(art.getArticleOriginal());
-			System.out.println("Subtitle: " + articleToSend.getSubtitle());
+			editingArticle.setCategory(articleCategory.getValue());
+			editingArticle.commit();
+			connection.saveArticle(editingArticle.getArticleOriginal());
 			// go back to main while saving the data
+			editingArticle.titleProperty().unbind();
+			editingArticle.subtitleProperty().unbind();
+			editingArticle.abstractTextProperty().unbind();
+			editingArticle.bodyTextProperty().unbind();
 			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			stage.close();
 		} catch (ServerCommunicationError e) {
@@ -186,22 +180,27 @@ public class ArticleEditController implements Controller {
 	 */
 	void setArticle(Article article) {
 		//this.editingArticle = (article != null) ? new ArticleEditModel(article) : new ArticleEditModel(usr);
+		this.articleCategory.getItems().addAll(Categories.values());
 		if(article != null) {
 			this.editingArticle = new ArticleEditModel(article);
-		} else if(this.usr == null) { // Logging not needed - Create article
+		} else if(article == null && this.usr == null) { // Logging not needed - Create article
 			this.editingArticle = new ArticleEditModel(new Article());
 			return;
 		} else {
 			this.editingArticle = new ArticleEditModel(usr);
 		}
-		System.out.println("Subtitle: " + this.editingArticle.getSubtitle());
+		// Updating UI
 		this.articleTitle.setText(this.editingArticle.getTitle());
 		this.articleTitle.setDisable(true);
 		this.articleSubtitle.setText(this.editingArticle.getSubtitle());
 		this.articleCategory.setValue(this.editingArticle.getCategory());
 		this.articleEditor.setHtmlText(this.editingArticle.getAbstractText());
 		this.articleImage.setImage(this.editingArticle.getImage());
-		this.articleCategory.getItems().addAll(Categories.values());
+		
+		// Binding
+		this.editingArticle.titleProperty().bind(articleTitle.textProperty());
+		this.editingArticle.subtitleProperty().bind(articleSubtitle.textProperty());
+		// it is needed to bind abstract and body properties, but 0 idea how to do it.
 	}
 
 
@@ -226,8 +225,7 @@ public class ArticleEditController implements Controller {
 	}
 
 	@Override
-	public void receiveArticle(Article article) {
-	}
+	public void receiveArticle(Article article) {}
 
 	@FXML
 	public void changeTextfield() {
@@ -274,7 +272,7 @@ public class ArticleEditController implements Controller {
 			this.articleEditor.setVisible(true);
 			this.abstractLabel.setVisible(false);
 			if(abstractSet) {
-				this.articleEditor.setHtmlText(this.editingArticle.getAbstractText());	
+				this.articleEditor.setHtmlText(this.editingArticle.getAbstractText());
 			} else {
 				this.articleEditor.setHtmlText(this.editingArticle.getBodyText());
 			}
@@ -285,6 +283,10 @@ public class ArticleEditController implements Controller {
 
 	@FXML
 	public void goBackToMain(ActionEvent event) {
+		editingArticle.titleProperty().unbind();
+		editingArticle.subtitleProperty().unbind();
+		editingArticle.abstractTextProperty().unbind();
+		editingArticle.bodyTextProperty().unbind();
 		editingArticle.discardChanges();
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		stage.close();

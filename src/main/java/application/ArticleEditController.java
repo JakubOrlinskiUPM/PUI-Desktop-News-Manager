@@ -116,8 +116,8 @@ public class ArticleEditController implements Controller {
 	 */
 	@FXML
 	private boolean send(ActionEvent event) {
-		String titleText = this.editingArticle.getTitle(); 
-		Categories category = this.editingArticle.getCategory(); 
+		String titleText = this.editingArticle.titleProperty().get(); 
+		Categories category = articleCategory.getValue(); 
 		if (titleText == null || category == null || 
 				titleText.equals("") || category == Categories.ALL) {
 			Alert alert = new Alert(AlertType.ERROR, "Imposible send the article!! Title and categoy are mandatory", ButtonType.OK);
@@ -184,15 +184,14 @@ public class ArticleEditController implements Controller {
 		this.articleCategory.getItems().addAll(Categories.values());
 		if(article != null) {
 			this.editingArticle = new ArticleEditModel(article);
+			this.articleTitle.setDisable(true);
 		} else if(article == null && this.usr == null) { // Logging not needed - Create article
 			this.editingArticle = new ArticleEditModel(new Article());
-			return;
 		} else {
 			this.editingArticle = new ArticleEditModel(usr);
 		}
 		// Updating UI
 		this.articleTitle.setText(this.editingArticle.getTitle());
-		this.articleTitle.setDisable(true);
 		this.articleSubtitle.setText(this.editingArticle.getSubtitle());
 		this.articleCategory.setValue(this.editingArticle.getCategory());
 		this.articleEditor.setHtmlText(this.editingArticle.getAbstractText());

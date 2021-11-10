@@ -37,7 +37,7 @@ public class ConnectionManager {
 
 	private String idUser;
 	private String authType;
-	private String apikey;
+	private String apikey = "ANON02";
 	private boolean loggedOK = false;
 
 	private boolean isAdministrator = false;

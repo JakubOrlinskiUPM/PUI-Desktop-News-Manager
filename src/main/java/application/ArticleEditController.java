@@ -117,7 +117,7 @@ public class ArticleEditController implements Controller {
 	 * @return true if the article has been saved
 	 */
 	@FXML
-	private boolean send() {
+	private boolean send(ActionEvent event) {
 		String titleText = this.editingArticle.getTitle(); 
 		Categories category = this.editingArticle.getCategory(); 
 		if (titleText == null || category == null || 
@@ -137,7 +137,10 @@ public class ArticleEditController implements Controller {
 			ArticleEditModel art = new ArticleEditModel(articleToSend);
 			art.commit();
 			connection.saveArticle(art.getArticleOriginal());
-			goBackToMain(null);
+			System.out.println("Subtitle: " + articleToSend.getSubtitle());
+			// go back to main while saving the data
+			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			stage.close();
 		} catch (ServerCommunicationError e) {
 			e.printStackTrace();
 		}
@@ -170,6 +173,7 @@ public class ArticleEditController implements Controller {
 		Article result = null;
 		if (this.editingArticle != null) {
 			result = this.editingArticle.getArticleOriginal();
+			
 		}
 		return result;
 	}
@@ -190,6 +194,7 @@ public class ArticleEditController implements Controller {
 		} else {
 			this.editingArticle = new ArticleEditModel(usr);
 		}
+		System.out.println("Subtitle: " + this.editingArticle.getSubtitle());
 		this.articleTitle.setText(this.editingArticle.getTitle());
 		this.articleTitle.setDisable(true);
 		this.articleSubtitle.setText(this.editingArticle.getSubtitle());

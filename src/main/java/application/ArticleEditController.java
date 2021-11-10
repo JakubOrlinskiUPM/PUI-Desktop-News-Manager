@@ -120,7 +120,12 @@ public class ArticleEditController implements Controller {
 		Categories category = articleCategory.getValue(); 
 		if (titleText == null || category == null || 
 				titleText.equals("") || category == Categories.ALL) {
-			Alert alert = new Alert(AlertType.ERROR, "Imposible send the article!! Title and categoy are mandatory", ButtonType.OK);
+			Alert alert = new Alert(AlertType.ERROR, "Imposible send the article! Title and categoy are mandatory.", ButtonType.OK);
+			alert.showAndWait();
+			return false;
+		}
+		if (usr == null) {
+			Alert alert = new Alert(AlertType.ERROR, "Imposible send the article! You need to be logged.", ButtonType.OK);
 			alert.showAndWait();
 			return false;
 		}

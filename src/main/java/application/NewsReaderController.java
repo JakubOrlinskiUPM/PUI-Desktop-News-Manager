@@ -102,6 +102,7 @@ public class NewsReaderController implements Controller {
                 articleSelected(oldValue, newValue);
             }
         });
+        this.newsHeader.setText("News Online");
         this.menuEdit.setDisable(true);
         this.menuDelete.setDisable(true);
     }
@@ -156,7 +157,6 @@ public class NewsReaderController implements Controller {
      */
     @Override
 	public void setUsr(User usr) {
-
         this.usr = usr;
         //Reload articles
         this.getData();
@@ -169,8 +169,10 @@ public class NewsReaderController implements Controller {
 
     public void onMenuLogin() {
         routeToLogin();
-        this.menuEdit.setDisable(false);
-        this.menuDelete.setDisable(false);
+        if(this.usr != null) {
+        	this.menuEdit.setDisable(false);
+            this.menuDelete.setDisable(false);
+        }
     }
 
     public void onMenuExit() {

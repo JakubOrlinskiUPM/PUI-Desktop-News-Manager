@@ -64,9 +64,13 @@ public class ArticleEditController implements Controller {
 	@FXML
 	private ChoiceBox<Categories> articleCategory;
 	@FXML
-	private HTMLEditor articleEditor;
+	private HTMLEditor articleAbstractEditor;
 	@FXML
-	private TextArea textArea;
+	private TextArea textAbstractArea;
+	@FXML
+	private HTMLEditor articleBodyEditor;
+	@FXML
+	private TextArea textBodyArea;
 	@FXML
 	private ImageView articleImage;
 	@FXML
@@ -130,15 +134,18 @@ public class ArticleEditController implements Controller {
 			return false;
 		}
 		try {
-			editingArticle.abstractTextProperty().set(this.articleEditor.getHtmlText());
+			editingArticle.abstractTextProperty().unbind();
+			editingArticle.bodyTextProperty().unbind();
+			if(commuter) {
+				editingArticle.abstractTextProperty().set(articleAbstractEditor.getHtmlText());
+				editingArticle.bodyTextProperty().set(articleBodyEditor.getHtmlText());
+			}
 			editingArticle.setCategory(articleCategory.getValue());
 			editingArticle.commit();
 			connection.saveArticle(editingArticle.getArticleOriginal());
 			// go back to main while saving the data
 			editingArticle.titleProperty().unbind();
 			editingArticle.subtitleProperty().unbind();
-			editingArticle.abstractTextProperty().unbind();
-			editingArticle.bodyTextProperty().unbind();
 			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			stage.close();
 		} catch (ServerCommunicationError e) {
@@ -173,7 +180,7 @@ public class ArticleEditController implements Controller {
 		Article result = null;
 		if (this.editingArticle != null) {
 			result = this.editingArticle.getArticleOriginal();
-			
+
 		}
 		return result;
 	}
@@ -199,13 +206,19 @@ public class ArticleEditController implements Controller {
 		this.articleTitle.setText(this.editingArticle.getTitle());
 		this.articleSubtitle.setText(this.editingArticle.getSubtitle());
 		this.articleCategory.setValue(this.editingArticle.getCategory());
-		this.articleEditor.setHtmlText(this.editingArticle.getAbstractText());
+		this.articleAbstractEditor.setHtmlText(this.editingArticle.getAbstractText());
+		this.articleBodyEditor.setHtmlText(this.editingArticle.getBodyText());
+		this.textBodyArea.setText(this.editingArticle.getBodyText());
+		this.textAbstractArea.setText(this.editingArticle.getAbstractText());
 		this.articleImage.setImage(this.editingArticle.getImage());
-		
+
 		// Binding
 		this.editingArticle.titleProperty().bind(articleTitle.textProperty());
 		this.editingArticle.subtitleProperty().bind(articleSubtitle.textProperty());
-		// it is needed to bind abstract and body properties, but 0 idea how to do it.
+		this.editingArticle.abstractTextProperty().bind(textAbstractArea.textProperty());
+		this.editingArticle.bodyTextProperty().bind(textBodyArea.textProperty());
+		//this.editingArticle.abstractTextProperty().set(this.articleAbstractEditor.getHtmlText());
+		//this.editingArticle.bodyTextProperty().set(this.articleBodyEditor.getHtmlText());
 	}
 
 
@@ -215,7 +228,6 @@ public class ArticleEditController implements Controller {
 	 */
 	@FXML
 	private void write() {
-		//TODO Consolidate all changes	
 		this.editingArticle.commit();
 		//Removes special characters not allowed for filenames
 		String name = this.getArticle().getTitle().replaceAll("\\||/|\\\\|:|\\?","");
@@ -237,49 +249,64 @@ public class ArticleEditController implements Controller {
 		if (this.abstractSet) {
 			this.abstractSet = false;
 			if(!this.commuter) {
-				this.textArea.setText(this.editingArticle.bodyTextProperty().get());
+				this.textAbstractArea.setVisible(false);
+				this.textBodyArea.setVisible(true);
+				this.textBodyArea.setText(this.articleBodyEditor.getHtmlText());
 				this.abstractLabel.setVisible(true);
 				this.abstractLabel.setText("Body");
 			} else {
-				this.articleEditor.setHtmlText(this.editingArticle.bodyTextProperty().get());
+				this.articleAbstractEditor.setVisible(false);
+				this.articleBodyEditor.setVisible(true);
+				this.articleBodyEditor.setHtmlText(this.textBodyArea.getText());
 			}
 			this.toggleTextButton.setText("Show Abstract");
 		} else {
 			this.abstractSet = true;
 			if(!this.commuter) {
-				this.textArea.setText(this.editingArticle.abstractTextProperty().get());
+				this.textBodyArea.setVisible(false);
+				this.textAbstractArea.setVisible(true);
+				this.textAbstractArea.setText(this.articleAbstractEditor.getHtmlText());
 				this.abstractLabel.setVisible(true);
 				this.abstractLabel.setText("Abstract");
 			} else {
-				this.articleEditor.setHtmlText(this.editingArticle.abstractTextProperty().get());
+				this.articleAbstractEditor.setVisible(true);
+				this.articleBodyEditor.setVisible(false);
+				this.articleAbstractEditor.setHtmlText(this.textAbstractArea.getText());
 			}
 			this.toggleTextButton.setText("Show Body");
 		}
 	}
-	
+
 	@FXML
 	public void commuteTextHtml() {
+		this.textBodyArea.setWrapText(true);
+		this.textAbstractArea.setWrapText(true);
 		if (this.commuter) {
 			this.commuter = false;
-			this.articleEditor.setVisible(false);
-			this.textArea.setVisible(true);
-			this.textArea.setWrapText(true);
-			this.textArea.setText(this.articleEditor.getHtmlText());
-			this.abstractLabel.setVisible(true);
 			if(abstractSet) {
+				this.articleAbstractEditor.setVisible(false);
+				this.textAbstractArea.setVisible(true);
+				this.textAbstractArea.setText(this.articleAbstractEditor.getHtmlText());
+				this.abstractLabel.setVisible(true);
 				this.abstractLabel.setText("Abstract");
 			} else {
+				this.articleBodyEditor.setVisible(false);
+				this.textBodyArea.setVisible(true);
+				this.textBodyArea.setText(this.articleBodyEditor.getHtmlText());
+				this.abstractLabel.setVisible(true);
 				this.abstractLabel.setText("Body");
 			}
 			this.toggleHtmlButton.setText("Show Text");
 		} else {
-			this.textArea.setVisible(false);
-			this.articleEditor.setVisible(true);
 			this.abstractLabel.setVisible(false);
 			if(abstractSet) {
-				this.articleEditor.setHtmlText(this.editingArticle.abstractTextProperty().get());
+				this.textAbstractArea.setVisible(false);
+				this.articleAbstractEditor.setVisible(true);
+				this.articleAbstractEditor.setHtmlText(this.textAbstractArea.getText());
 			} else {
-				this.articleEditor.setHtmlText(this.editingArticle.bodyTextProperty().get());
+				this.textBodyArea.setVisible(false);
+				this.articleBodyEditor.setVisible(true);
+				this.articleBodyEditor.setHtmlText(this.textBodyArea.getText());
 			}
 			this.commuter = true;
 			this.toggleHtmlButton.setText("Show Html");

@@ -237,21 +237,21 @@ public class ArticleEditController implements Controller {
 		if (this.abstractSet) {
 			this.abstractSet = false;
 			if(!this.commuter) {
-				this.textArea.setText(this.editingArticle.getBodyText());
+				this.textArea.setText(this.editingArticle.bodyTextProperty().get());
 				this.abstractLabel.setVisible(true);
 				this.abstractLabel.setText("Body");
 			} else {
-				this.articleEditor.setHtmlText(this.editingArticle.getBodyText());
+				this.articleEditor.setHtmlText(this.editingArticle.bodyTextProperty().get());
 			}
 			this.toggleTextButton.setText("Show Abstract");
 		} else {
 			this.abstractSet = true;
 			if(!this.commuter) {
-				this.textArea.setText(this.editingArticle.getAbstractText());
+				this.textArea.setText(this.editingArticle.abstractTextProperty().get());
 				this.abstractLabel.setVisible(true);
 				this.abstractLabel.setText("Abstract");
 			} else {
-				this.articleEditor.setHtmlText(this.editingArticle.getAbstractText());
+				this.articleEditor.setHtmlText(this.editingArticle.abstractTextProperty().get());
 			}
 			this.toggleTextButton.setText("Show Body");
 		}
@@ -277,9 +277,9 @@ public class ArticleEditController implements Controller {
 			this.articleEditor.setVisible(true);
 			this.abstractLabel.setVisible(false);
 			if(abstractSet) {
-				this.articleEditor.setHtmlText(this.editingArticle.getAbstractText());
+				this.articleEditor.setHtmlText(this.editingArticle.abstractTextProperty().get());
 			} else {
-				this.articleEditor.setHtmlText(this.editingArticle.getBodyText());
+				this.articleEditor.setHtmlText(this.editingArticle.bodyTextProperty().get());
 			}
 			this.commuter = true;
 			this.toggleHtmlButton.setText("Show Html");

@@ -63,21 +63,21 @@ public class ImagePickerController {
     		 Path path = FileSystems.getDefault().getPath(
     				 selectedFile.getAbsolutePath());
     		 idImageURL.setText(path.toUri().toString());
-    	 }
+             image = new Image(path.toUri().toString());
+             imgPreview.setImage(image);
+         }
     }
 
     @FXML
     void onImagePreview(ActionEvent event) {
-    	image = new Image(idImageURL.getText(),
-  			  false);
-        imgPreview.setImage(image);
+
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert idImageURL != null : "fx:id=\"idImageURL\" was not injected: check your FXML file 'ImagePicker.fxml'.";
         assert imgPreview != null : "fx:id=\"imgPreview\" was not injected: check your FXML file 'ImagePicker.fxml'.";
-        Image image = new Image("file:./images/noImage.jpg", true);
+        Image image = new Image("file:./images/noImage.jpg");
         imgPreview.setImage(image);
 
     }

@@ -80,6 +80,7 @@ public class ArticleEditController implements Controller {
 	private Button toggleTextButton;
 	@FXML
 	private Button toggleHtmlButton;
+
 	private ConnectionManager setConnectionManager;
 
 
@@ -216,8 +217,9 @@ public class ArticleEditController implements Controller {
 		this.articleBodyEditor.setHtmlText(this.editingArticle.getBodyText());
 		this.textBodyArea.setText(this.editingArticle.getBodyText());
 		this.textAbstractArea.setText(this.editingArticle.getAbstractText());
-		this.articleImage.setImage(this.editingArticle.getImage());
-
+		if (this.editingArticle.getImage() != null) {
+			this.articleImage.setImage(this.editingArticle.getImage());
+		}
 		// Binding
 		this.editingArticle.titleProperty().bind(articleTitle.textProperty());
 		this.editingArticle.subtitleProperty().bind(articleSubtitle.textProperty());

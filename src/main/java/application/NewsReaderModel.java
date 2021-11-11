@@ -39,7 +39,7 @@ class NewsReaderModel {
 	 * other case this class will connect with a server in order to retrieve all
 	 * available articles
 	 */
-	private boolean dummyData = true;
+	private boolean dummyData = false;
 	/**
 	 * if dummyData is false an instance of modelManager will be used to
 	 * retrieve all available articles from the server

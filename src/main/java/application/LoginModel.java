@@ -24,7 +24,7 @@ class LoginModel {
 	/**
 	 * If is true dummyData for users will be used
 	 */
-	private boolean dummyData = true;
+	private boolean dummyData = false;
 	/**
 	 * The ModelManager is used to communicate with articles server
 	 */

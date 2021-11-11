@@ -313,9 +313,11 @@ public class NewsReaderController implements Controller {
             		controller.setArticle(article); //Load a file
             	}
             	stage.showAndWait();
-            	articleImageView.setImage(controller.getArticle().getImageData());
-                articleContent.getEngine().loadContent(controller.getArticle().getAbstractText());
-            	initialize();
+            	if(controller.getArticle()!=null) {
+            		articleImageView.setImage(controller.getArticle().getImageData());
+            		articleContent.getEngine().loadContent(controller.getArticle().getAbstractText());
+            		initialize();
+            	}
             }
         } catch (IOException e) {
             e.printStackTrace();

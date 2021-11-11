@@ -277,8 +277,8 @@ public class NewsReaderController implements Controller {
                 }
                 controller.setConnectionManager(this.connectionManager);
                 controller.receiveArticle(article);
-                stage.show();
 
+                stage.showAndWait();
             } else {
             	LoginController controller = loader.<LoginController>getController();
                 controller.setConnectionManager(this.connectionManager);
@@ -326,8 +326,9 @@ public class NewsReaderController implements Controller {
             	if(controller.getArticle()!=null) {
             		articleImageView.setImage(controller.getArticle().getImageData());
             		articleContent.getEngine().loadContent(controller.getArticle().getAbstractText());
-            		initialize();
             	}
+                this.getData();
+
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -282,12 +282,14 @@ public class NewsReaderController implements Controller {
             } else {
             	LoginController controller = loader.<LoginController>getController();
                 controller.setConnectionManager(this.connectionManager);
-            	User newUsr = controller.getLoggedUsr();
+
+                stage.showAndWait();
+
+                User newUsr = controller.getLoggedUsr();
             	if (newUsr != null) {
             		setUsr(newUsr);
                     System.out.println("User Id in main screen: " + this.usr.getIdUser());
             	}
-                stage.showAndWait();
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -238,25 +238,24 @@ public class NewsReaderController implements Controller {
     	// Read a file:
     	FileChooser fileChooser = new FileChooser();
     	//Set extension filter
-    	FileChooser.ExtensionFilter extFilterJson = new FileChooser.ExtensionFilter("Json files (*.json)", "*.JSON");
-    	FileChooser.ExtensionFilter extFilterNews = new FileChooser.ExtensionFilter("News files (*.news)", "*.NEWS");
-        fileChooser.getExtensionFilters().addAll(extFilterJson, extFilterNews);
-        
+    	FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("News articles", "*.news", "*.json");
+        fileChooser.getExtensionFilters().add(extFilter);
+
         //Show open file dialog
         File file = fileChooser.showOpenDialog(null);
-        
-        JsonObject jsonArticle = JsonArticle.readFile(file.getAbsolutePath());
-        try {
-			Article loadedArticle = JsonArticle.jsonToArticle(jsonArticle);
-			System.out.println("Successfully loaded Article: " + loadedArticle.getTitle());
-			
-			routeToEditPage(AppScenes.EDITOR, loadedArticle);
-		} catch (ErrorMalFormedArticle e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-//        
-            
+
+        if (file != null) {
+            JsonObject jsonArticle = JsonArticle.readFile(file.getAbsolutePath());
+            try {
+                Article loadedArticle = JsonArticle.jsonToArticle(jsonArticle);
+                System.out.println("Successfully loaded Article: " + loadedArticle.getTitle());
+
+                routeToEditPage(AppScenes.EDITOR, loadedArticle);
+            } catch (ErrorMalFormedArticle e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
     }
 
     private void routeToPage(AppScenes scene, Article article) {
@@ -330,7 +329,6 @@ public class NewsReaderController implements Controller {
             		articleContent.getEngine().loadContent(controller.getArticle().getAbstractText());
             	}
                 this.getData();
-
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -35,6 +35,7 @@ import serverConection.ConnectionManager;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Locale;
 
 import javax.json.JsonObject;
 
@@ -93,7 +94,8 @@ public class NewsReaderController implements Controller {
             Categories selectedCategory = this.categoriesChoiceBox.getSelectionModel().getSelectedItem();
             filteredData = new FilteredList<>(newsReaderModel.getArticles(), article -> (
                     selectedCategory == null || selectedCategory == Categories.ALL ||
-                            article.getCategory() == selectedCategory.toString()));
+                            article.getCategory().toLowerCase(Locale.ROOT)
+                                    .equals(selectedCategory.toString().toLowerCase(Locale.ROOT))));
 
             this.articleListView.setItems(filteredData);
             this.articleListView.getSelectionModel().select(0);

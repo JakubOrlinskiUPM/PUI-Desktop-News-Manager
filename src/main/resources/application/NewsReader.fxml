@@ -57,7 +57,7 @@
                             <items>
                                 <MenuItem mnemonicParsing="false" onAction="#onMenuLoad" text="Load article from file" />
                                 <MenuItem mnemonicParsing="false" onAction="#onMenuLogin" text="Login" />
-                                <MenuItem mnemonicParsing="false" onAction="#onMenuNew" text="New article" />
+                                <MenuItem fx:id="menuAdd" mnemonicParsing="false" onAction="#onMenuNew" text="New article" />
                                 <MenuItem fx:id="menuEdit" mnemonicParsing="false" onAction="#onMenuEdit" text="Edit article" />
                                 <MenuItem fx:id="menuDelete" mnemonicParsing="false" onAction="#onMenuDelete" text="Delete article" />
                                 <MenuItem mnemonicParsing="false" onAction="#onMenuExit" text="Exit" />

@@ -65,7 +65,10 @@ public class NewsReaderController implements Controller {
 
     @FXML
     private Button readMore;
-    
+
+    @FXML
+    public MenuItem menuAdd;
+
     @FXML
     private MenuItem menuEdit;
     
@@ -104,6 +107,7 @@ public class NewsReaderController implements Controller {
         });
         if(usr == null ) {
             this.newsHeader.setText("News Online");
+            this.menuAdd.setDisable(true);
             this.menuEdit.setDisable(true);
             this.menuDelete.setDisable(true);
         }
@@ -172,6 +176,7 @@ public class NewsReaderController implements Controller {
     public void onMenuLogin() {
         routeToLogin();
         if(this.usr != null) {
+        	this.menuAdd.setDisable(false);
         	this.menuEdit.setDisable(false);
             this.menuDelete.setDisable(false);
         }

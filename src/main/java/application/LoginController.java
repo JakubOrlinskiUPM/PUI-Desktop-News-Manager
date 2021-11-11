@@ -71,7 +71,7 @@ public class LoginController implements Controller {
 		return loggedUsr;
 	}
 		
-	void setConnectionManager (ConnectionManager connection) {
+	public void setConnectionManager(ConnectionManager connection) {
 		this.loginModel.setConnectionManager(connection);
 	}
 

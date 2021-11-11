@@ -80,7 +80,7 @@ public class ArticleEditController implements Controller {
 	private Button toggleTextButton;
 	@FXML
 	private Button toggleHtmlButton;
-
+	private ConnectionManager setConnectionManager;
 
 
 	@FXML
@@ -125,12 +125,12 @@ public class ArticleEditController implements Controller {
 		Categories category = articleCategory.getValue(); 
 		if (titleText == null || category == null || 
 				titleText.equals("") || category == Categories.ALL) {
-			Alert alert = new Alert(AlertType.ERROR, "Imposible send the article! Title and categoy are mandatory.", ButtonType.OK);
+			Alert alert = new Alert(AlertType.ERROR, "Impossible send the article! Title and categoy are mandatory.", ButtonType.OK);
 			alert.showAndWait();
 			return false;
 		}
 		if (usr == null) {
-			Alert alert = new Alert(AlertType.ERROR, "Imposible send the article! You need to be logged.", ButtonType.OK);
+			Alert alert = new Alert(AlertType.ERROR, "Impossible send the article! You need to be logged in.", ButtonType.OK);
 			alert.showAndWait();
 			return false;
 		}
@@ -175,6 +175,11 @@ public class ArticleEditController implements Controller {
 		} else {
 			this.userId.setText("");
 		}
+	}
+
+	@Override
+	public void setConnectionManager(ConnectionManager connectionManager) {
+		this.setConnectionManager = connectionManager;
 	}
 
 	Article getArticle() {

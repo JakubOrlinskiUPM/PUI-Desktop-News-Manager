@@ -148,8 +148,8 @@ public class NewsReaderController implements Controller {
         return usr;
     }
 
-    void setConnectionManager(ConnectionManager connection) {
-//		this.newsReaderModel.setDummyData(false); //System is connected so dummy data are not needed
+    public void setConnectionManager(ConnectionManager connection) {
+        this.connectionManager = connection;
         this.newsReaderModel.setConnectionManager(connection);
         this.getData();
     }
@@ -266,20 +266,23 @@ public class NewsReaderController implements Controller {
             
 
             if (article != null) {
-            	stage.show();
                 Controller controller = loader.<NewsReaderController>getController();
                 if (this.usr != null) {
                 	controller.setUsr(usr);
                 }
+                controller.setConnectionManager(this.connectionManager);
                 controller.receiveArticle(article);
+                stage.show();
+
             } else {
-            	stage.showAndWait();
             	LoginController controller = loader.<LoginController>getController();
+                controller.setConnectionManager(this.connectionManager);
             	User newUsr = controller.getLoggedUsr();
             	if (newUsr != null) {
             		setUsr(newUsr);
                     System.out.println("User Id in main screen: " + this.usr.getIdUser());
             	}
+                stage.showAndWait();
             }
         } catch (IOException e) {
             e.printStackTrace();

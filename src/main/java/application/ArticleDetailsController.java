@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import serverConection.ConnectionManager;
 
 /**
  * @author Ã�ngelLucas
@@ -57,7 +58,12 @@ public class ArticleDetailsController implements Controller {
 			// Update UI information - especially articleHeader
 		}
 
-		/**
+	@Override
+	public void setConnectionManager(ConnectionManager connectionManager) {
+
+	}
+
+	/**
 		 * @param article the article to set
 		 */
 		void setArticle(Article article) {
